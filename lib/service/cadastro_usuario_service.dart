@@ -1,17 +1,16 @@
+import 'dart:convert';
+
 import 'package:cadusuario_frontend/app/endpoints.dart';
 import 'package:cadusuario_frontend/model/cadastro_usuario_model.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<CadastroUsuarioModel>> fetchCadastroUsuario() async {
-  final response = await http.get(Uri.https(ENDPOINT_CADASTRO_USUARIO, ''));
+Future<List<CadastroUsuarioModel>> fetchCadastroUsuario({bool forceReload}) async {
+  final response = await http.get(Uri.https(URL_API, ENDPOINT_CADASTRO_USUARIO));
 
   if (response.statusCode == 200) {
-    return _parseCadastroUsuario();
+    Iterable list = jsonDecode(response.body);
+    return list.map((model) => CadastroUsuarioModel.fromMap(model)).toList();
   } else {
-    throw Exception('Failed to load album');
+    throw Exception('Falha ao carregar');
   }
-}
-
-List<CadastroUsuarioModel> _parseCadastroUsuario({Map<String, dynamic> map}) {
-  return (map["data"]).map<CadastroUsuarioModel>((value) => new CadastroUsuarioModel.fromMap(value)).toList();
 }

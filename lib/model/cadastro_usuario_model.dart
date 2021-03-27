@@ -1,23 +1,39 @@
 import 'dart:convert';
 
-class CadastroUsuarioModel {
-  final String cpf;
-  final String nome;
-  final String email;
-  final String celular;
+import 'package:flutter/material.dart';
 
-  CadastroUsuarioModel({this.cpf, this.nome, this.email, this.celular,});
+class CadastroUsuarioModel {
+  final int id;
+  final String name;
+  final String username;
+  final String email;
+
+  CadastroUsuarioModel({
+    @required this.id,
+    @required this.name,
+    @required this.username,
+    @required this.email,
+  });
 
   factory CadastroUsuarioModel.fromMap(Map<String, dynamic> map) {
     return CadastroUsuarioModel(
-      cpf: map['cpf'] as String,
-      nome: map['nome'] as String,
+      id: map['id'] as int,
+      name: map['name'] as String,
+      username: map['username'] as String,
       email: map['email'] as String,
-      celular: map['celular'] as String,
     );
   }
 
   factory CadastroUsuarioModel.fromJson(String json) {
     return CadastroUsuarioModel.fromMap(jsonDecode(json));
   }
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'id': id,
+        'name': name,
+        'username': username,
+        'email': email,
+      };
+
+  String toJson() => jsonEncode(toMap());
 }

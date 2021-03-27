@@ -1,3 +1,3 @@
-const URL_API = 'localhost:8080/';
+const URL_API = 'jsonplaceholder.typicode.com';
 
-const ENDPOINT_CADASTRO_USUARIO = '${URL_API}cadastro/usuario';
+const ENDPOINT_CADASTRO_USUARIO = 'users';

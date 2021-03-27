@@ -2,7 +2,9 @@
 const CPF = 'CPF';
 const NOME = 'Nome';
 const EMAIL = 'Email';
-const CELULAR = 'Celular';
-const PROCESSANDO = 'Processando';
+const USERNAME = 'Username';
+const SALVANDO = 'Salvando...';
 const SALVAR = 'Salvar';
 const VALOR_INCORRETO = 'Valor incorreto';
+const DIGITE_O_ID = 'Digite o ID';
+const CADASTRO_USUARIO = 'Cadastro usuário';

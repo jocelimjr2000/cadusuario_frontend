@@ -27,6 +27,7 @@ class CadastroUsuarioBloc {
   }
 
   Future<Null> reLoad() async {
+    await fetchCadastroUsuario(forceReload: true);
     _forceReload = true;
 
     load();

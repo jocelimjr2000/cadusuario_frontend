@@ -30,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
             keyboardType: TextInputType.number,
             controller: textController,
           ),
-          ElevatedButton(onPressed: () => open(context, CadastroUsuarioWidget(idUsuario: int.parse(textController.text))), child: Text(CADASTRO_USUARIO)),
+          ElevatedButton(onPressed: () => open(context, CadastroUsuarioWidget(idUsuario: int.parse(textController.text) - 1)), child: Text(CADASTRO_USUARIO)),
         ],
       ),
     );

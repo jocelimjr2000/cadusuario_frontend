@@ -9,6 +9,7 @@ Future<List<CadastroUsuarioModel>> fetchCadastroUsuario({bool forceReload}) asyn
 
   if (response.statusCode == 200) {
     Iterable list = jsonDecode(response.body);
+    print(list);
     return list.map((model) => CadastroUsuarioModel.fromMap(model)).toList();
   } else {
     throw Exception('Falha ao carregar');

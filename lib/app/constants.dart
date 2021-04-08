@@ -5,6 +5,7 @@ const EMAIL = 'Email';
 const USERNAME = 'Username';
 const SALVANDO = 'Salvando...';
 const SALVAR = 'Salvar';
+const FALHA = 'Falha';
 const VALOR_INCORRETO = 'Valor incorreto';
 const DIGITE_O_ID = 'Digite o ID';
 const CADASTRO_USUARIO = 'Cadastro usuário';

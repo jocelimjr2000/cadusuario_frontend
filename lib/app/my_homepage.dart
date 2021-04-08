@@ -25,12 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
-          TextField(
-            decoration: new InputDecoration(labelText: DIGITE_O_ID),
-            keyboardType: TextInputType.number,
-            controller: textController,
-          ),
-          ElevatedButton(onPressed: () => open(context, CadastroUsuarioWidget(idUsuario: int.parse(textController.text) - 1)), child: Text(CADASTRO_USUARIO)),
+          ElevatedButton(onPressed: () => open(context, CadastroUsuarioWidget()), child: Text(CADASTRO_USUARIO)),
         ],
       ),
     );

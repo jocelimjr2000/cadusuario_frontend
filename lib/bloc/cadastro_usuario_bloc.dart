@@ -10,7 +10,7 @@ class CadastroUsuarioBloc {
 
   Stream<List<CadastroUsuarioModel>> get dataOut => _controller.stream.asyncMap(
         (_) {
-          Future<List<CadastroUsuarioModel>> data = fetchCadastroUsuario(forceReload: _forceReload);
+          Future<List<CadastroUsuarioModel>> data = getCadastroUsuario(forceReload: _forceReload);
 
           _forceReload = false;
 
@@ -27,10 +27,28 @@ class CadastroUsuarioBloc {
   }
 
   Future<Null> reLoad() async {
-    await fetchCadastroUsuario(forceReload: true);
+    await getCadastroUsuario(forceReload: true);
     _forceReload = true;
 
     load();
+  }
+
+  Future<Null> save(CadastroUsuarioModel cadastroUsuarioModel) async {
+    await postCadastroUsuario(cadastroUsuarioModel);
+
+    reLoad();
+  }
+
+  Future<Null> update(CadastroUsuarioModel cadastroUsuarioModel) async {
+    await putCadastroUsuario(cadastroUsuarioModel);
+
+    reLoad();
+  }
+
+  Future<Null> delete(CadastroUsuarioModel cadastroUsuarioModel) async {
+    await deleteCadastroUsuario(cadastroUsuarioModel);
+
+    reLoad();
   }
 
   void dispose() {

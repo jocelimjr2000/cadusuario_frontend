@@ -5,7 +5,7 @@ import 'package:cadusuario_frontend/app/endpoints.dart';
 import 'package:cadusuario_frontend/model/cadastro_usuario_model.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<CadastroUsuarioModel>> fetchCadastroUsuario({bool forceReload}) async {
+Future<List<CadastroUsuarioModel>> getCadastroUsuario({bool forceReload}) async {
   final response = await http.get(Uri.https(URL_API, ENDPOINT_CADASTRO_USUARIO));
 
   if (response.statusCode == 200) {
@@ -16,7 +16,7 @@ Future<List<CadastroUsuarioModel>> fetchCadastroUsuario({bool forceReload}) asyn
   }
 }
 
-Future<CadastroUsuarioModel> saveCadastroUsuario(CadastroUsuarioModel cadastroUsuarioModel) async {
+Future<CadastroUsuarioModel> postCadastroUsuario(CadastroUsuarioModel cadastroUsuarioModel) async {
   final response = await http.post(
     Uri.https(URL_API, ENDPOINT_CADASTRO_USUARIO),
     headers: <String, String>{
@@ -32,10 +32,9 @@ Future<CadastroUsuarioModel> saveCadastroUsuario(CadastroUsuarioModel cadastroUs
   }
 }
 
-Future<CadastroUsuarioModel> updateCadastroUsuario(CadastroUsuarioModel cadastroUsuarioModel) async {
-  String _end = cadastroUsuarioModel.id.toString(); //todo verificar melhor forma de fazer
+Future<CadastroUsuarioModel> putCadastroUsuario(CadastroUsuarioModel cadastroUsuarioModel) async {
   final http.Response response = await http.put(
-    Uri.https(URL_API, '$ENDPOINT_CADASTRO_USUARIO/$_end'), //todo verificar parametros
+    Uri.https(URL_API, '$ENDPOINT_CADASTRO_USUARIO/${cadastroUsuarioModel.id.toString()}'),
     headers: <String, String>{
       CONTEUDO: APLICACAO,
     },
@@ -49,16 +48,16 @@ Future<CadastroUsuarioModel> updateCadastroUsuario(CadastroUsuarioModel cadastro
   }
 }
 
-Future<CadastroUsuarioModel> deleteCadastroUsuario(int id) async {
+Future<bool> deleteCadastroUsuario(CadastroUsuarioModel cadastroUsuarioModel) async {
   final http.Response response = await http.delete(
-    Uri.https(URL_API, '$ENDPOINT_CADASTRO_USUARIO/$id'),
+    Uri.https(URL_API, '$ENDPOINT_CADASTRO_USUARIO/${cadastroUsuarioModel.id.toString()}'),
     headers: <String, String>{
       CONTEUDO: APLICACAO,
     },
   );
 
   if (response.statusCode == 200) {
-    return CadastroUsuarioModel.fromMap(jsonDecode(response.body));
+    return true;
   } else {
     throw Exception(response.statusCode);
   }

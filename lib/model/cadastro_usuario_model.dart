@@ -1,18 +1,16 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 class CadastroUsuarioModel {
-  final int id;
-  final String name;
-  final String username;
-  final String email;
+  int id;
+  String name;
+  String username;
+  String email;
 
   CadastroUsuarioModel({
-    @required this.id,
-    @required this.name,
-    @required this.username,
-    @required this.email,
+    this.id = 0,
+    this.name = '',
+    this.username = '',
+    this.email = '',
   });
 
   factory CadastroUsuarioModel.fromMap(Map<String, dynamic> map) {

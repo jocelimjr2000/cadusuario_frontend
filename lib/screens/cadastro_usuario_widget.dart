@@ -22,7 +22,7 @@ class _CadastroUsuarioWidgetState extends State<CadastroUsuarioWidget> {
   }
 
   void _excluir(CadastroUsuarioModel cadastroUsuarioModel) async {
-    cadastroUsuarioBloc.delete(cadastroUsuarioModel);
+    await cadastroUsuarioBloc.delete(cadastroUsuarioModel);
   }
 
   _body(List<CadastroUsuarioModel> cadastroUsuarioModel) {
@@ -30,12 +30,39 @@ class _CadastroUsuarioWidgetState extends State<CadastroUsuarioWidget> {
 
     if (cadastroUsuarioModel != null) {
       for (int x = 0; x < cadastroUsuarioModel.length; x++) {
-        items.add(ListTile(
-          leading: Text(cadastroUsuarioModel[x].name),
-          title: Text(cadastroUsuarioModel[x].username),
-          trailing: ElevatedButton(onPressed: () => _alterar(cadastroUsuarioModel[x]), child: Text('Alterar')),
-        ));
+        items.add(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(cadastroUsuarioModel[x].name),
+              Row(
+                children: [
+                  ElevatedButton(onPressed: () => _alterar(cadastroUsuarioModel[x]), child: Icon(Icons.edit)),
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                  ElevatedButton(
+                    onPressed: () => _excluir(cadastroUsuarioModel[x]),
+                    child: Icon(Icons.delete),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red, // background
+                      onPrimary: Colors.white, // foreground
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
       }
+      items.add(
+        FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: _novo,
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.white,
+        ),
+      );
     }
     return ListView(
       padding: EdgeInsets.all(16.0),

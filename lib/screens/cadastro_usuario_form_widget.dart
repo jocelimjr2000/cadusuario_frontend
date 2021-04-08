@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 
 class CadastroUsuarioFormWidget extends StatefulWidget {
   final CadastroUsuarioModel cadastroUsuarioModel;
-  
+
   CadastroUsuarioFormWidget(this.cadastroUsuarioModel);
-  
 
   @override
-  _CadastroUsuarioFormWidgetState createState() =>  _CadastroUsuarioFormWidgetState();
-  
+  _CadastroUsuarioFormWidgetState createState() => _CadastroUsuarioFormWidgetState();
 }
 
 //Validação
@@ -24,7 +22,7 @@ String _validar(String value) {
 class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
   final _formKey = GlobalKey<FormState>();
 
-  CadastroUsuarioBloc _cadastroUsuarioBloc = CadastroUsuarioBloc();
+  CadastroUsuarioBloc cadastroUsuarioBloc = CadastroUsuarioBloc();
 
   TextEditingController _idController;
   TextEditingController _nameController;
@@ -43,6 +41,15 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
 
   _salvar() async {
     if (_formKey.currentState.validate()) {
+      widget.cadastroUsuarioModel.id = int.parse(_idController.text);
+      widget.cadastroUsuarioModel.name = _nameController.text;
+      widget.cadastroUsuarioModel.username = _usernameController.text;
+      widget.cadastroUsuarioModel.email = _emailController.text;
+      if (widget.cadastroUsuarioModel.id == 0) {
+        await cadastroUsuarioBloc.save(widget.cadastroUsuarioModel);
+      } else {
+        await cadastroUsuarioBloc.update(widget.cadastroUsuarioModel);
+      }
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(SALVANDO)));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(FALHA)));
@@ -56,7 +63,7 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
         Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               TextFormField(controller: _idController, decoration: InputDecoration(hintText: CPF), maxLength: 11, validator: _validar),
@@ -85,12 +92,12 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
         backgroundColor: Colors.redAccent,
       ),
       body: StreamBuilder(
-        stream: _cadastroUsuarioBloc.dataOut,
+        stream: cadastroUsuarioBloc.dataOut,
         builder: (BuildContext context, AsyncSnapshot<List<CadastroUsuarioModel>> snapshot) {
           if (snapshot.hasData) {
             return RefreshIndicator(
               child: _body(snapshot.data),
-              onRefresh: _cadastroUsuarioBloc.reLoad,
+              onRefresh: cadastroUsuarioBloc.reLoad,
             );
           } else if (snapshot.hasError) {
             return snapshot.error;
@@ -103,7 +110,7 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
 
   @override
   void dispose() {
-    _cadastroUsuarioBloc.dispose();
+    cadastroUsuarioBloc.dispose();
 
     _idController.dispose();
     _nameController.dispose();

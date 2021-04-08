@@ -48,7 +48,7 @@ Future<CadastroUsuarioModel> putCadastroUsuario(CadastroUsuarioModel cadastroUsu
   }
 }
 
-Future<bool> deleteCadastroUsuario(CadastroUsuarioModel cadastroUsuarioModel) async {
+Future<CadastroUsuarioModel> deleteCadastroUsuario(CadastroUsuarioModel cadastroUsuarioModel) async {
   final http.Response response = await http.delete(
     Uri.https(URL_API, '$ENDPOINT_CADASTRO_USUARIO/${cadastroUsuarioModel.id.toString()}'),
     headers: <String, String>{
@@ -57,7 +57,7 @@ Future<bool> deleteCadastroUsuario(CadastroUsuarioModel cadastroUsuarioModel) as
   );
 
   if (response.statusCode == 200) {
-    return true;
+    return CadastroUsuarioModel.fromMap(jsonDecode(response.body));
   } else {
     throw Exception(response.statusCode);
   }

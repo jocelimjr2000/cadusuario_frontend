@@ -1,6 +1,8 @@
 import 'package:cadusuario_frontend/app/constants.dart';
 import 'package:cadusuario_frontend/bloc/cadastro_usuario_bloc.dart';
+import 'package:cadusuario_frontend/functions/open.dart';
 import 'package:cadusuario_frontend/model/cadastro_usuario_model.dart';
+import 'package:cadusuario_frontend/screens/cadastro_usuario_widget.dart';
 import 'package:flutter/material.dart';
 
 class CadastroUsuarioFormWidget extends StatefulWidget {
@@ -41,14 +43,15 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
 
   _salvar() async {
     if (_formKey.currentState.validate()) {
-      widget.cadastroUsuarioModel.id = int.parse(_idController.text);
       widget.cadastroUsuarioModel.name = _nameController.text;
       widget.cadastroUsuarioModel.username = _usernameController.text;
       widget.cadastroUsuarioModel.email = _emailController.text;
       if (widget.cadastroUsuarioModel.id == 0) {
         await cadastroUsuarioBloc.save(widget.cadastroUsuarioModel);
+        Navigator.pop(context);
       } else {
         await cadastroUsuarioBloc.update(widget.cadastroUsuarioModel);
+        Navigator.pop(context);
       }
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(SALVANDO)));
     } else {
@@ -66,7 +69,7 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              TextFormField(controller: _idController, decoration: InputDecoration(hintText: CPF), maxLength: 11, validator: _validar),
+              TextFormField(controller: _idController, decoration: InputDecoration(hintText: CPF), maxLength: 11, validator: _validar, readOnly: true,),
               TextFormField(controller: _nameController, decoration: InputDecoration(hintText: NOME), maxLength: 200, validator: _validar),
               TextFormField(controller: _usernameController, decoration: InputDecoration(hintText: USERNAME), keyboardType: TextInputType.emailAddress, maxLength: 40, validator: _validar),
               TextFormField(controller: _emailController, decoration: InputDecoration(hintText: EMAIL), keyboardType: TextInputType.phone, maxLength: 10, validator: _validar),

@@ -22,11 +22,43 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         backgroundColor: Colors.redAccent,
       ),
-      body: ListView(
-        padding: EdgeInsets.all(16.0),
-        children: [
-          ElevatedButton(onPressed: () => open(context, CadastroUsuarioWidget()), child: Text(CADASTRO_USUARIO)),
-        ],
+      body: Text(''), //todo inserir home
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Logo'),
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+            ),
+            Card(
+              color: Colors.redAccent,
+              child: ListTile(
+                title: Text(CADASTRO_USUARIO),
+                onTap: () => {
+                  Navigator.pop(context),
+                  open(context, CadastroUsuarioWidget()),
+                },
+              ),
+            ),
+            Card(
+              color: Colors.redAccent,
+              child: ListTile(
+                title: Text('Opção X'),
+                onTap: () => {},
+              ),
+            ),
+            Card(
+              color: Colors.redAccent,
+              child: ListTile(
+                title: Text('Opção Y'),
+                onTap: () => {},
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

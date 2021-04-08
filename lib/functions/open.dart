@@ -5,15 +5,17 @@ void open(BuildContext context, Widget screen) async {
 }
 
 void openAndExecute(BuildContext context, Widget screen, Function funcTrue, Function funcFalse) async {
-  await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => screen)).then((execute) {
-    if (execute ?? false) {
-      if (funcTrue != null) {
-        funcTrue();
+  await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => screen)).then(
+    (execute) {
+      if (execute ?? false) {
+        if (funcTrue != null) {
+          funcTrue();
+        }
+      } else {
+        if (funcFalse != null) {
+          funcFalse();
+        }
       }
-    } else {
-      if (funcFalse != null) {
-        funcFalse();
-      }
-    }
-  });
+    },
+  );
 }

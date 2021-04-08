@@ -6,12 +6,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: CADASTRO_USUARIO,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: CADASTRO_USUARIO,)
-    );
+        debugShowCheckedModeBanner: false,
+        title: CADASTRO_USUARIO,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(
+          title: CADASTRO_USUARIO,
+        ));
   }
 }

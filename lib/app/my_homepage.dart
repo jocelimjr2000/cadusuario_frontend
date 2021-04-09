@@ -20,15 +20,25 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         backgroundColor: Colors.redAccent,
       ),
-      body: Text(''), //todo inserir home
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: [
+          Image.asset(
+            "images/btm.jpg",
+          ),
+          Text('Início'),
+        ],
+      ), //todo inserir home
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Logo'),
               decoration: BoxDecoration(
-                color: Colors.white,
+                image: DecorationImage(
+                  image: AssetImage("images/btm.jpg"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Card(
@@ -44,14 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Card(
               color: Colors.redAccent,
               child: ListTile(
-                title: Text('Opção X'),
-                onTap: () => {},
-              ),
-            ),
-            Card(
-              color: Colors.redAccent,
-              child: ListTile(
-                title: Text('Opção Y'),
+                title: Text('Movimentação de estoque'),
                 onTap: () => {},
               ),
             ),

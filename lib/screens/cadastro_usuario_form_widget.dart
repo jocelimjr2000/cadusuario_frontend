@@ -24,27 +24,41 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
 
   CadastroUsuarioBloc cadastroUsuarioBloc = CadastroUsuarioBloc();
 
-  TextEditingController _idController;
-  TextEditingController _nameController;
-  TextEditingController _usernameController;
+  TextEditingController _cpfController;
+  TextEditingController _nomeController;
+  TextEditingController _dtNascimentoController;
   TextEditingController _emailController;
+  TextEditingController _nivelController;
+  TextEditingController _nivelLogadoController;
+
+  bool _novo = false;
 
   @override
   void initState() {
     super.initState();
 
-    _idController = TextEditingController(text: widget.cadastroUsuarioModel.id.toString());
-    _nameController = TextEditingController(text: widget.cadastroUsuarioModel.name);
-    _usernameController = TextEditingController(text: widget.cadastroUsuarioModel.username);
+    _cpfController = TextEditingController(text: widget.cadastroUsuarioModel.cpf);
+    _nomeController = TextEditingController(text: widget.cadastroUsuarioModel.nome);
+    _dtNascimentoController = TextEditingController(text: widget.cadastroUsuarioModel.dtNascimento);
     _emailController = TextEditingController(text: widget.cadastroUsuarioModel.email);
+    _nivelController = TextEditingController(text: widget.cadastroUsuarioModel.nivel.toString());
+    _nivelLogadoController = TextEditingController(text: widget.cadastroUsuarioModel.nivelLogado.toString());
+
+    if(widget.cadastroUsuarioModel.cpf == ''){
+      _novo = true;
+    }
   }
 
   _salvar() async {
     if (_formKey.currentState.validate()) {
-      widget.cadastroUsuarioModel.name = _nameController.text;
-      widget.cadastroUsuarioModel.username = _usernameController.text;
+      widget.cadastroUsuarioModel.cpf = _cpfController.text;
+      widget.cadastroUsuarioModel.nome = _nomeController.text;
+      widget.cadastroUsuarioModel.dtNascimento = _dtNascimentoController.text;
       widget.cadastroUsuarioModel.email = _emailController.text;
-      if (widget.cadastroUsuarioModel.id == 0) {
+      widget.cadastroUsuarioModel.nivel = int.parse(_nivelController.text);
+      widget.cadastroUsuarioModel.nivelLogado = int.parse(_nivelLogadoController.text);
+
+      if (_novo) {
         await cadastroUsuarioBloc.save(widget.cadastroUsuarioModel);
         Navigator.pop(context);
       } else {
@@ -67,16 +81,12 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              TextFormField(
-                controller: _idController,
-                decoration: InputDecoration(hintText: CPF),
-                maxLength: 11,
-                validator: _validar,
-                readOnly: true,
-              ),
-              TextFormField(controller: _nameController, decoration: InputDecoration(hintText: NOME), maxLength: 200, validator: _validar),
-              TextFormField(controller: _usernameController, decoration: InputDecoration(hintText: USERNAME), keyboardType: TextInputType.emailAddress, maxLength: 40, validator: _validar),
+              TextFormField(controller: _cpfController, decoration: InputDecoration(hintText: CPF), maxLength: 11, validator: _validar),
+              TextFormField(controller: _nomeController, decoration: InputDecoration(hintText: NOME), maxLength: 200, validator: _validar),
+              TextFormField(controller: _dtNascimentoController, decoration: InputDecoration(hintText: DATA_NASCIMENTO), keyboardType: TextInputType.emailAddress, maxLength: 40, validator: _validar),
               TextFormField(controller: _emailController, decoration: InputDecoration(hintText: EMAIL), keyboardType: TextInputType.phone, maxLength: 10, validator: _validar),
+              TextFormField(controller: _nivelController, decoration: InputDecoration(hintText: NIVEL), keyboardType: TextInputType.phone, maxLength: 1, validator: _validar),
+              TextFormField(controller: _nivelLogadoController, decoration: InputDecoration(hintText: NIVEL_LOGADO), keyboardType: TextInputType.phone, maxLength: 1, validator: _validar),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
@@ -104,7 +114,7 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
           if (snapshot.hasData) {
             return RefreshIndicator(
               child: _body(snapshot.data),
-              onRefresh: cadastroUsuarioBloc.reLoad,
+              onRefresh: cadastroUsuarioBloc.load,
             );
           } else if (snapshot.hasError) {
             return snapshot.error;
@@ -119,10 +129,12 @@ class _CadastroUsuarioFormWidgetState extends State<CadastroUsuarioFormWidget> {
   void dispose() {
     cadastroUsuarioBloc.dispose();
 
-    _idController.dispose();
-    _nameController.dispose();
-    _usernameController.dispose();
+    _cpfController.dispose();
+    _nomeController.dispose();
+    _dtNascimentoController.dispose();
     _emailController.dispose();
+    _nivelController.dispose();
+    _nivelLogadoController.dispose();
 
     super.dispose();
   }

@@ -18,11 +18,11 @@ class _CadastroUsuarioWidgetState extends State<CadastroUsuarioWidget> {
   }
 
   void _alterar(CadastroUsuarioModel cadastroUsuarioModel) {
-    openAndExecute(context, CadastroUsuarioFormWidget(cadastroUsuarioModel), cadastroUsuarioBloc.reLoad, null);
+    open(context, CadastroUsuarioFormWidget(cadastroUsuarioModel));
   }
 
   void _excluir(CadastroUsuarioModel cadastroUsuarioModel) async {
-    await cadastroUsuarioBloc.delete(cadastroUsuarioModel);
+    //await cadastroUsuarioBloc.delete(cadastroUsuarioModel);
   }
 
   _body(List<CadastroUsuarioModel> cadastroUsuarioModel) {
@@ -34,7 +34,7 @@ class _CadastroUsuarioWidgetState extends State<CadastroUsuarioWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(cadastroUsuarioModel[x].name),
+              Text(cadastroUsuarioModel[x].nome.toString()),
               Row(
                 children: [
                   ElevatedButton(onPressed: () => _alterar(cadastroUsuarioModel[x]), child: Icon(Icons.edit)),
@@ -77,13 +77,14 @@ class _CadastroUsuarioWidgetState extends State<CadastroUsuarioWidget> {
         title: Text(CADASTRO_USUARIO),
         backgroundColor: Colors.redAccent,
       ),
+
       body: StreamBuilder(
         stream: cadastroUsuarioBloc.dataOut,
         builder: (BuildContext context, AsyncSnapshot<List<CadastroUsuarioModel>> snapshot) {
           if (snapshot.hasData) {
             return RefreshIndicator(
               child: _body(snapshot.data),
-              onRefresh: cadastroUsuarioBloc.reLoad,
+              onRefresh: cadastroUsuarioBloc.load,
             );
           } else if (snapshot.hasError) {
             return snapshot.error;

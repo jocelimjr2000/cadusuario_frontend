@@ -1,24 +1,30 @@
 import 'dart:convert';
 
 class CadastroUsuarioModel {
-  int id;
-  String name;
-  String username;
+  String cpf;
+  String nome;
+  String dtNascimento;
   String email;
+  int nivel;
+  int nivelLogado;
 
   CadastroUsuarioModel({
-    this.id = 0,
-    this.name = '',
-    this.username = '',
+    this.cpf = '',
+    this.nome = '',
+    this.dtNascimento = '',
     this.email = '',
+    this.nivel = 0,
+    this.nivelLogado = 0,
   });
 
   factory CadastroUsuarioModel.fromMap(Map<String, dynamic> map) {
     return CadastroUsuarioModel(
-      id: map['id'] as int,
-      name: map['name'] as String,
-      username: map['username'] as String,
+      cpf: map['cpf'] as String,
+      nome: map['nome'] as String,
+      dtNascimento: map['dtNascimento'] as String,
       email: map['email'] as String,
+      nivel: map['nivel'] as int,
+      nivelLogado: map['nivelLogado'] as int,
     );
   }
 
@@ -27,10 +33,12 @@ class CadastroUsuarioModel {
   }
 
   Map<String, dynamic> toMap() => <String, dynamic>{
-        'id': id,
-        'name': name,
-        'username': username,
+        'cpf': cpf,
+        'nome': nome,
+        'dtNascimento': dtNascimento,
         'email': email,
+        'nivel': nivel,
+        'nivelLogado': nivelLogado,
       };
 
   String toJson() => jsonEncode(toMap());

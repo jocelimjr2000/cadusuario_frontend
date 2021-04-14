@@ -1,3 +1,8 @@
-const URL_API = 'jsonplaceholder.typicode.com';
+const URL_API = 'http://192.168.100.88:9999/usuario';
 
-const ENDPOINT_CADASTRO_USUARIO = 'users';
+const ENDPOINT_CADASTRO_USUARIO_PENDENTE = '$URL_API/listar/P';
+const ENDPOINT_CADASTRO_USUARIO_APROVADO = '$URL_API/listar/A';
+const ENDPOINT_CADASTRO_USUARIO_REPROVADO = '$URL_API/listar/R';
+
+const ENDPOINT_CADASTRO_USUARIO = '$URL_API/';
+const ENDPOINT_CADASTRO_USUARIO_ATUALIZAR = '$URL_API/atualizar';

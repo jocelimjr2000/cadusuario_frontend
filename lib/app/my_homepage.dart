@@ -1,5 +1,11 @@
 import 'package:cadusuario_frontend/app/constants.dart';
 import 'package:cadusuario_frontend/functions/open.dart';
+import 'package:cadusuario_frontend/model/cadastro_usuario_model.dart';
+import 'package:cadusuario_frontend/screens/cadastro_alterar_status_form_widget.dart';
+import 'package:cadusuario_frontend/screens/cadastro_alterar_status_reprovado_widget.dart';
+import 'package:cadusuario_frontend/screens/cadastro_alterar_status_widget.dart';
+import 'package:cadusuario_frontend/screens/cadastro_login_form_widget.dart';
+import 'package:cadusuario_frontend/screens/cadastro_usuario_form_widget.dart';
 import 'package:cadusuario_frontend/screens/cadastro_usuario_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -44,10 +50,60 @@ class _MyHomePageState extends State<MyHomePage> {
             Card(
               color: Colors.redAccent,
               child: ListTile(
-                title: Text(CADASTRO_USUARIO),
+                title: Text(LOGIN),
+                onTap: () => {
+                  Navigator.pop(context),
+                  open(context, CadastroLoginFormWidget()),
+                },
+              ),
+            ),
+            Card(
+              color: Colors.redAccent,
+              child: ListTile(
+                title: Text(CADASTRAR_NOVO_USUARIO),
+                onTap: () => {
+                  Navigator.pop(context),
+                open(context, CadastroUsuarioFormWidget(new CadastroUsuarioModel())),
+                },
+              ),
+            ),
+            Card(
+              color: Colors.redAccent,
+              child: ListTile(
+                title: Text(USUARIOS_APROVADOS),
                 onTap: () => {
                   Navigator.pop(context),
                   open(context, CadastroUsuarioWidget()),
+                },
+              ),
+            ),
+            Card(
+              color: Colors.redAccent,
+              child: ListTile(
+                title: Text(ALTERAR_STATUS),
+                onTap: () => {
+                  Navigator.pop(context),
+                  open(context, CadastroAlterarStatusWidget()),
+                },
+              ),
+            ),
+            Card(
+              color: Colors.redAccent,
+              child: ListTile(
+                title: Text(PESQUISAR_USUARIO),
+                onTap: () => {
+                  Navigator.pop(context),
+                  //open(context, CadastroPesquisarUsuarioWidget()),
+                },
+              ),
+            ),
+            Card(
+              color: Colors.redAccent,
+              child: ListTile(
+                title: Text(USUARIOS_REPROVADOS),
+                onTap: () => {
+                  Navigator.pop(context),
+                  open(context, CadastroAlterarStatusReprovadoWidget()),
                 },
               ),
             ),

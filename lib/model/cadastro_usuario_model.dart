@@ -6,7 +6,6 @@ class CadastroUsuarioModel {
   String dtNascimento;
   String email;
   int nivel;
-  int nivelLogado;
 
   CadastroUsuarioModel({
     this.cpf = '',
@@ -14,7 +13,6 @@ class CadastroUsuarioModel {
     this.dtNascimento = '',
     this.email = '',
     this.nivel = 0,
-    this.nivelLogado = 0,
   });
 
   factory CadastroUsuarioModel.fromMap(Map<String, dynamic> map) {
@@ -24,7 +22,6 @@ class CadastroUsuarioModel {
       dtNascimento: map['dtNascimento'] as String,
       email: map['email'] as String,
       nivel: map['nivel'] as int,
-      nivelLogado: map['nivelLogado'] as int,
     );
   }
 
@@ -38,7 +35,6 @@ class CadastroUsuarioModel {
         'dtNascimento': dtNascimento,
         'email': email,
         'nivel': nivel,
-        'nivelLogado': nivelLogado,
       };
 
   String toJson() => jsonEncode(toMap());

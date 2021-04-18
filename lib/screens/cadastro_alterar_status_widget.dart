@@ -1,24 +1,26 @@
 import 'package:cadusuario_frontend/app/constants.dart';
-import 'package:cadusuario_frontend/bloc/cadastro_usuario_bloc.dart';
+import 'package:cadusuario_frontend/bloc/cadastro_alterar_status_bloc.dart';
 import 'package:cadusuario_frontend/functions/open.dart';
+import 'package:cadusuario_frontend/model/cadastro_alterar_status_model.dart';
 import 'package:cadusuario_frontend/model/cadastro_usuario_model.dart';
-import 'package:cadusuario_frontend/screens/cadastro_usuario_form_widget.dart';
+import 'package:cadusuario_frontend/screens/cadastro_alterar_status_form_widget.dart';
 import 'package:flutter/material.dart';
 
-class CadastroUsuarioWidget extends StatefulWidget {
+class CadastroAlterarStatusWidget extends StatefulWidget {
   @override
-  _CadastroUsuarioWidgetState createState() => _CadastroUsuarioWidgetState();
+  _CadastroAlterarStatusWidgetState createState() => _CadastroAlterarStatusWidgetState();
 }
 
-class _CadastroUsuarioWidgetState extends State<CadastroUsuarioWidget> {
-  CadastroUsuarioBloc cadastroUsuarioBloc = CadastroUsuarioBloc();
+class _CadastroAlterarStatusWidgetState extends State<CadastroAlterarStatusWidget> {
+
+  CadastroAlterarStatusBloc cadastroAlterarStatusBloc = CadastroAlterarStatusBloc();
 
   void _alterar(CadastroUsuarioModel cadastroUsuarioModel) {
-    open(context, CadastroUsuarioFormWidget(cadastroUsuarioModel));
-  }
+    CadastroAlterarStatusModel cadastroAlterarStatusModel = CadastroAlterarStatusModel();
+    cadastroAlterarStatusModel.cpf = cadastroUsuarioModel.cpf;
+    cadastroAlterarStatusModel.aprovar = false;
 
-  void _excluir(CadastroUsuarioModel cadastroUsuarioModel) async {
-    //await cadastroUsuarioBloc.delete(cadastroUsuarioModel);
+    open(context, CadastroAlterarStatusFormWidget(cadastroAlterarStatusModel));
   }
 
   _body(List<CadastroUsuarioModel> cadastroUsuarioModel) {
@@ -37,14 +39,6 @@ class _CadastroUsuarioWidgetState extends State<CadastroUsuarioWidget> {
                   SizedBox(
                     width: 8.0,
                   ),
-                  ElevatedButton(
-                    onPressed: () => _excluir(cadastroUsuarioModel[x]),
-                    child: Icon(Icons.delete),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red, // background
-                      onPrimary: Colors.white, // foreground
-                    ),
-                  ),
                 ],
               ),
             ],
@@ -62,16 +56,16 @@ class _CadastroUsuarioWidgetState extends State<CadastroUsuarioWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(USUARIOS_APROVADOS),
+        title: Text(ALTERAR_STATUS),
         backgroundColor: Colors.redAccent,
       ),
       body: StreamBuilder(
-        stream: cadastroUsuarioBloc.dataOut,
+        stream: cadastroAlterarStatusBloc.dataOut,
         builder: (BuildContext context, AsyncSnapshot<List<CadastroUsuarioModel>> snapshot) {
           if (snapshot.hasData) {
             return RefreshIndicator(
               child: _body(snapshot.data),
-              onRefresh: cadastroUsuarioBloc.load,
+              onRefresh: cadastroAlterarStatusBloc.load,
             );
           } else if (snapshot.hasError) {
             return snapshot.error;
@@ -84,7 +78,7 @@ class _CadastroUsuarioWidgetState extends State<CadastroUsuarioWidget> {
 
   @override
   void dispose() {
-    cadastroUsuarioBloc.dispose();
+    cadastroAlterarStatusBloc.dispose();
     super.dispose();
   }
 }
